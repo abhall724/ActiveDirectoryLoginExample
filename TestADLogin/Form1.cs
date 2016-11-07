@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.DirectoryServices.ActiveDirectory;
-using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
-using System.Collections;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace TestADLogin
 {
@@ -30,7 +22,7 @@ namespace TestADLogin
 
 			var domain = ((Domain)cmbDomains.SelectedItem);
 
-			var users = ActiveDirectoryServices.GetAllUserNames(domain);
+			var users = ActiveDirectoryServices.GetAllUsers(domain);
 			var groups = ActiveDirectoryServices.GetGroupNames(domain);
 
 			this.cmbUserNames.Items.Clear();
@@ -39,7 +31,6 @@ namespace TestADLogin
 			this.cmbGroups.Items.Clear();
 			this.cmbGroups.Items.AddRange(groups.ToArray());
 		}
-
 
 		private void btnLogin_Click(object sender, EventArgs e)
 		{

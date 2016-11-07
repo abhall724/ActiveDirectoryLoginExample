@@ -146,9 +146,10 @@
 			// 
 			// Form1
 			// 
+			this.AcceptButton = this.btnLogin;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(422, 396);
+			this.ClientSize = new System.Drawing.Size(343, 341);
 			this.Controls.Add(this.cmbGroups);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.cmbUserNames);
@@ -161,6 +162,7 @@
 			this.Controls.Add(this.lblUserName);
 			this.Controls.Add(this.label1);
 			this.Name = "Form1";
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.Text = "Form1";
 			this.ResumeLayout(false);
 			this.PerformLayout();

@@ -24,7 +24,7 @@ namespace UnitTestADLogin
 		{
 			Domain domain = ActiveDirectoryServices.GetDomains().FirstOrDefault();
 
-			List<string> users = ActiveDirectoryServices.GetAllUserNames(domain);
+			List<string> users = ActiveDirectoryServices.GetAllUsers(domain);
 			Assert.IsTrue(users.Count > 0);
 		}
 
@@ -33,7 +33,7 @@ namespace UnitTestADLogin
 		{
 			Domain domain = ActiveDirectoryServices.GetDomains().FirstOrDefault();
 
-			List<string> users = ActiveDirectoryServices.GetAllUserNamesOld(domain);
+			List<string> users = ActiveDirectoryServices.GetAllUsersOld(domain);
 			Assert.IsTrue(users.Count > 0);
 		}
 

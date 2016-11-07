@@ -25,23 +25,10 @@ namespace TestADLogin
 				domains.Add(dom);
 			}
 
-			return domains;
+			return domains.OrderBy(d => d.Name).ToList();
 		}
 
-		private static void GetAllUserNamesExtracted(List<string> results, SearchResultCollection oSearchResultCollection)
-		{
-			foreach (SearchResult item in oSearchResultCollection)
-			{
-				DirectoryEntry entry = item.GetDirectoryEntry();
-
-				if (entry.Properties.Contains("sAMAccountName"))
-				{
-					results.Add(entry.Properties["sAMAccountName"].Value.ToString());
-				}
-			}
-		}
-
-		public static List<string> GetAllUserNames(Domain domain)
+		public static List<string> GetAllUsers(Domain domain)
 		{
 			try
 			{
@@ -51,7 +38,7 @@ namespace TestADLogin
 					{
 						PrincipalSearcher searcher = new PrincipalSearcher(gp);
 
-						var result = searcher.FindAll().Select(x => x.SamAccountName);
+						var result = searcher.FindAll().Select(x => x.SamAccountName).OrderBy(r => r);
 						return result.ToList();
 					}
 				}
@@ -64,7 +51,7 @@ namespace TestADLogin
 			return new List<string>();
 		}
 
-		public static List<string> GetAllUserNamesOld(Domain domain)
+		public static List<string> GetAllUsersOld(Domain domain)
 		{
 			List<string> results = new List<string>();
 
@@ -78,7 +65,7 @@ namespace TestADLogin
 				Console.WriteLine(ex.ToString());
 			}
 
-			return results;
+			return results.OrderBy(r => r).ToList();
 		}
 
 		public static List<string> GetGroupNames(Domain domain)
@@ -92,7 +79,7 @@ namespace TestADLogin
 						PrincipalSearcher searcher = new PrincipalSearcher(gp);
 
 						var result = searcher.FindAll().Select(x => x.Name);
-						return result.ToList();
+						return result.OrderBy(r => r).ToList();
 					}
 				}
 			}
@@ -122,7 +109,7 @@ namespace TestADLogin
 				Console.WriteLine(ex.ToString());
 			}
 
-			return results;
+			return results.OrderBy(r => r).ToList();
 		}
 
 		public static List<string> GetAllUserNamesByGroup(Domain domain, string group)
@@ -136,7 +123,7 @@ namespace TestADLogin
 					using (var gp = GroupPrincipal.FindByIdentity(pc, group))
 					{
 						var members = gp.GetMembers(true).Select(u => u.SamAccountName);
-						return members.ToList();
+						return members.OrderBy(m => m).ToList();
 					}
 				}
 			}
@@ -146,6 +133,35 @@ namespace TestADLogin
 			}
 
 			return results;
+		}
+
+		public static bool AuthenticateUser(string domain, string userName, string password)
+		{
+			try
+			{
+				using (var context = new PrincipalContext(ContextType.Domain, domain, null, ContextOptions.Negotiate | ContextOptions.Signing | ContextOptions.Sealing))
+				{
+					return context.ValidateCredentials(userName, password);
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.ToString());
+				return false;
+			}
+		}
+
+		private static void GetAllUserNamesExtracted(List<string> results, SearchResultCollection oSearchResultCollection)
+		{
+			foreach (SearchResult item in oSearchResultCollection)
+			{
+				DirectoryEntry entry = item.GetDirectoryEntry();
+
+				if (entry.Properties.Contains("sAMAccountName"))
+				{
+					results.Add(entry.Properties["sAMAccountName"].Value.ToString());
+				}
+			}
 		}
 
 		private static SearchResultCollection SearchDomain(DirectoryEntry searchRoot, string searchFilter, SearchScope scope)
@@ -166,22 +182,6 @@ namespace TestADLogin
 			
 
 			return null;
-		}
-
-		public static bool AuthenticateUser(string domain, string userName, string password)
-		{
-			try
-			{
-				using (var context = new PrincipalContext(ContextType.Domain, domain, null, ContextOptions.Negotiate | ContextOptions.Signing | ContextOptions.Sealing))
-				{
-					return context.ValidateCredentials(userName, password);
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.ToString());
-				return false;
-			}
 		}
 	}
 }
