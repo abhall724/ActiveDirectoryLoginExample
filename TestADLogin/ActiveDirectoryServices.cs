@@ -28,8 +28,10 @@ namespace TestADLogin
 			return domains.OrderBy(d => d.Name).ToList();
 		}
 
-		public static List<string> GetAllUsers(Domain domain)
+		public static List<ADUser> GetAllUsers(Domain domain)
 		{
+			List<ADUser> result = new List<ADUser>();
+
 			try
 			{
 				using (var pc = new PrincipalContext(ContextType.Domain, domain.Name, null, ContextOptions.Negotiate | ContextOptions.Signing | ContextOptions.Sealing))
@@ -38,17 +40,23 @@ namespace TestADLogin
 					{
 						PrincipalSearcher searcher = new PrincipalSearcher(gp);
 
-						var result = searcher.FindAll().Select(x => x.SamAccountName).OrderBy(r => r);
-						return result.ToList();
+						var searchResult = searcher.FindAll();
+
+						foreach (UserPrincipal user in searchResult)
+						{
+							result.Add(new ADUser(user));
+						}
 					}
 				}
+
+				return result.OrderBy(r => r).ToList();
 			}
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.ToString());
 			}
 
-			return new List<string>();
+			return result;
 		}
 
 		public static List<string> GetAllUsersOld(Domain domain)
