@@ -1,6 +1,7 @@
 ﻿using System;
 using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
+using System.Security.Principal;
 using System.Windows.Forms;
 
 namespace TestADLogin
@@ -11,7 +12,22 @@ namespace TestADLogin
 		{
 			this.InitializeComponent();
 			this.cmbDomains.Items.AddRange(ActiveDirectoryServices.GetDomains().ToArray());
+			var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
 			
+			if (ValidateCurrentUser(identity))
+			{
+				var saveThisInTheDatabase = identity.User.Value;
+				this.txtCurrentUser.Text = identity.Name;
+				this.txtUserIdentity.Text = saveThisInTheDatabase;
+			}
+		}
+
+		private bool ValidateCurrentUser(WindowsIdentity identity)
+		{
+			return identity != null
+				&& identity.IsAuthenticated
+				&& !identity.IsAnonymous
+				&& !identity.IsGuest;
 		}
 
 		private void cmbDomains_SelectedValueChanged(object sender, EventArgs e)

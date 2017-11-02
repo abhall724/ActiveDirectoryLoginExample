@@ -39,6 +39,10 @@
 			this.cmbUserNames = new System.Windows.Forms.ComboBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.cmbGroups = new System.Windows.Forms.ComboBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.txtCurrentUser = new System.Windows.Forms.TextBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.txtUserIdentity = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -100,11 +104,11 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(16, 243);
+			this.label3.Location = new System.Drawing.Point(8, 240);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(37, 13);
+			this.label3.Size = new System.Drawing.Size(69, 13);
 			this.label3.TabIndex = 9;
-			this.label3.Text = "Result";
+			this.label3.Text = "Login Result:";
 			// 
 			// txtResult
 			// 
@@ -144,12 +148,49 @@
 			this.cmbGroups.TabIndex = 13;
 			this.cmbGroups.SelectedValueChanged += new System.EventHandler(this.cmbGroups_SelectedValueChanged);
 			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(342, 58);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(116, 13);
+			this.label5.TabIndex = 14;
+			this.label5.Text = "Current Windows User:";
+			// 
+			// txtCurrentUser
+			// 
+			this.txtCurrentUser.Location = new System.Drawing.Point(464, 56);
+			this.txtCurrentUser.Name = "txtCurrentUser";
+			this.txtCurrentUser.ReadOnly = true;
+			this.txtCurrentUser.Size = new System.Drawing.Size(157, 20);
+			this.txtCurrentUser.TabIndex = 15;
+			// 
+			// label6
+			// 
+			this.label6.Location = new System.Drawing.Point(345, 93);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(276, 30);
+			this.label6.TabIndex = 16;
+			this.label6.Text = "Use this token to save and verify the current active user later, if required:";
+			// 
+			// txtUserIdentity
+			// 
+			this.txtUserIdentity.Location = new System.Drawing.Point(345, 124);
+			this.txtUserIdentity.Name = "txtUserIdentity";
+			this.txtUserIdentity.ReadOnly = true;
+			this.txtUserIdentity.Size = new System.Drawing.Size(276, 20);
+			this.txtUserIdentity.TabIndex = 17;
+			// 
 			// Form1
 			// 
 			this.AcceptButton = this.btnLogin;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(343, 341);
+			this.ClientSize = new System.Drawing.Size(634, 364);
+			this.Controls.Add(this.txtUserIdentity);
+			this.Controls.Add(this.label6);
+			this.Controls.Add(this.txtCurrentUser);
+			this.Controls.Add(this.label5);
 			this.Controls.Add(this.cmbGroups);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.cmbUserNames);
@@ -182,6 +223,10 @@
 		private System.Windows.Forms.ComboBox cmbUserNames;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.ComboBox cmbGroups;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.TextBox txtCurrentUser;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.TextBox txtUserIdentity;
 	}
 }
 
